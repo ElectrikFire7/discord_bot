@@ -8,7 +8,7 @@ A simple Discord bot that responds to messages, handles reactions, and supports 
 ✅ Responds to user messages with predefined replies.  
 ✅ Supports **private and public messages**.  
 ✅ Adds **emoji reactions** to specific messages.  
-✅ Enables playing a lite version of Psych on the channel
+✅ Enables playing a lite version of Psych on the channel.
 ✅ Uses an external **`.env` file** for token security.  
 
 ---
