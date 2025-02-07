@@ -1,8 +1,9 @@
 from discord import Message
 from directCommands.directCommands import directCommand
 from simpleResponse.simpleResponse import simpleResponse
+from psychCommands.psychCommands import psychCommand
 
-async def controller (message: Message) -> None:
+async def controller (message: Message, sessions, client) -> None:
 
     user_message: str = str(message.content)
 
@@ -15,6 +16,10 @@ async def controller (message: Message) -> None:
     if user_message[0] == '?':
         user_message = user_message[1:]
         await directCommand(message, user_message)
+
+    if user_message[0] == '!':
+        user_message = user_message[1:]
+        await psychCommand(message, user_message, sessions, client)
 
     #if the message has no starting tag, it has a few fun responses
     #check simpleResponse folder

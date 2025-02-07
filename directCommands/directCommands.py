@@ -1,5 +1,5 @@
 from discord import Message
-from random import choice, randint
+from random import randint
 
 
 #if you want the bot to generate small fun events, map them to a unique command that starts with "?" and add the function here
