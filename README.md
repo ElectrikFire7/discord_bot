@@ -9,7 +9,6 @@ A simple Discord bot that responds to messages, handles reactions, and supports 
 ✅ Supports **private and public messages**.  
 ✅ Adds **emoji reactions** to specific messages.  
 ✅ Enables playing a lite version of Psych on the channel.
-✅ Uses an external **`.env` file** for token security.  
 
 ---
 
