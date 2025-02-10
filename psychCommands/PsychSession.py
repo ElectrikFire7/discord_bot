@@ -22,7 +22,7 @@ class PsychSession:
 
     def generate_prompt(self):
         try:
-            with open("psychCommands\prompts.txt", "r", encoding="utf-8") as file:
+            with open("psychCommands/prompts.txt", "r", encoding="utf-8") as file:
                 prompts = file.readlines()
                 if not prompts:
                     return "No prompts available."

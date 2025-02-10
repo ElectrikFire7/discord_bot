@@ -109,8 +109,8 @@ async def psychCommand(message: Message, user_message: str, sessions, client) ->
                     if emoji_player_map[reaction.emoji].user == reaction_user:
                         vote_count[reaction.emoji] -= 3
 
-                who_voted += f" {reaction_user.display_name}"
-            who_voted += "\n"                    
+                    who_voted += f" {reaction_user.display_name}"
+                who_voted += "\n"                    
 
         await message.channel.send(f"**Votes:**\n{who_voted}")
 
