@@ -91,7 +91,7 @@ async def psychCommand(message: Message, user_message: str, sessions, client) ->
         for index, emoji in enumerate(emoji_player_map.keys()):
            await vote_message.add_reaction(emoji)
 
-        await asyncio.sleep(40)
+        await asyncio.sleep(25)
 
         
         #calculate points and display results
@@ -108,7 +108,9 @@ async def psychCommand(message: Message, user_message: str, sessions, client) ->
                 async for reaction_user in reaction.users():
                     if emoji_player_map[reaction.emoji].user == reaction_user:
                         vote_count[reaction.emoji] -= 3
-
+                    
+                    if reaction_user.bot:
+                        continue
                     who_voted += f" {reaction_user.display_name}"
                 who_voted += "\n"                    
 
