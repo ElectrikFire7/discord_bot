@@ -8,8 +8,7 @@ A simple Discord bot that responds to messages, handles reactions, and supports 
 ✅ Responds to user messages with predefined replies.  
 ✅ Supports **private and public messages**.  
 ✅ Adds **emoji reactions** to specific messages.  
-✅ Detects and processes **user reactions**.  
-✅ Uses an external **`.env` file** for token security.  
+✅ Enables playing a lite version of Psych on the channel.
 
 ---
 
@@ -19,6 +18,7 @@ discord-bot/
 │── media/                    # Stores GIFs and media files
 │── directCommands/           # Handles specific commands
 │── simpleResponse/           # Handles predefined responses
+│── psychCommands/            # Handles commands for psych game
 │── .env                      # Stores the bot token securely
 │── .gitignore                # Ignores unnecessary files (e.g., __pycache__)
 │── main.py                   # Main bot script
@@ -65,11 +65,19 @@ python main.py
 | `hello there` | Replies with `"General Kenobi!"` |
 | `hi` | Sends a fun message and a GIF |
 
-## **📜 Bot Messages**
+## **📜 Bot General Commands**
 | Commands | Description |
 |---------|-------------|
-| `In Development` | Replies with `In Development` |
-| `In Development` | Replies with `In Development` |
+| `nsfw` | Replies with `nsfw` |
+| `nsfw` | Replies with `nsfw` |
+
+## **📜 Bot Psych Commands**
+| Commands | Description |
+|---------|-------------|
+| `!new` | Starts a new session |
+| `!start` | Starts a new Round |
+| `!stop` | Stops existing session |
+| `!players` | Lists all existing players |
 
 ---
 
@@ -78,13 +86,7 @@ python main.py
    - `main.py` receives messages and forwards them to `controller.py`.  
    - `controller.py` checks whether it's a command (`?command`) or a simple response.  
    - `simpleResponse.py` processes basic responses.
-
-2. **Reactions Handling**  
-   - The bot sends messages that allow reactions.  
-   - It listens for `on_reaction_add()` to detect user reactions.  
-   - It filters reactions **only to bot messages** using `message.author == client.user`.
-
----
+   - `psychCommands.py` processes Psych game requests.
 
 
 ## **🛑 Troubleshooting**
