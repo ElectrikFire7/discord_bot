@@ -1,5 +1,5 @@
 import os
-import threading
+import threading, requests, time
 from flask import Flask, jsonify, redirect
 from dotenv import load_dotenv
 from discord import Intents, Client, Message, Reaction, User
@@ -79,6 +79,18 @@ def run_discord_bot():
     os.environ["RUNNING_IN_RENDER"] = "True" 
     client.run(TOKEN)
 
+def keep_alive():
+    url = "https://discord-bot-xy9q.onrender.com/health"
+    while True:
+        try:
+            requests.get(url)
+            print("Sent keep-alive ping")
+        except:
+            print("Failed to send ping")
+
+        time.sleep(780)
+
 if __name__ == "__main__":
     threading.Thread(target=run_flask, daemon=True).start()
+    threading.Thread(target=keep_alive, daemon=True).start()
     run_discord_bot()
