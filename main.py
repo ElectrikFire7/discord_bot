@@ -63,6 +63,10 @@ async def on_reaction_remove(reaction: Reaction, user: User):
             if session.channel == reaction.message.channel:
                 session.remove_player(user)
 
+@client.event
+async def on_disconnect():
+    print("Bot has disconnected from Discord!")
+
 
 def run_flask():
     app.run(host="0.0.0.0", port=5000)
