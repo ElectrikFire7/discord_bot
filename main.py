@@ -64,9 +64,17 @@ async def on_reaction_remove(reaction: Reaction, user: User):
                 session.remove_player(user)
 
 
+def run_flask():
+    app.run(host="0.0.0.0", port=5000)
+
 def run_discord_bot():
+    if os.environ.get("RUNNING_IN_RENDER"):
+        print("Bot is already running, skipping duplicate start.")
+        return
+    
+    os.environ["RUNNING_IN_RENDER"] = "True" 
     client.run(TOKEN)
 
 if __name__ == "__main__":
-    threading.Thread(target=run_discord_bot, daemon=True).start()
-    app.run(host="0.0.0.0", port=5000, debug=False)
+    threading.Thread(target=run_flask, daemon=True).start()
+    run_discord_bot()
