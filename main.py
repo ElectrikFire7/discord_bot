@@ -1,4 +1,6 @@
 import os
+import threading
+from flask import Flask, jsonify, redirect
 from dotenv import load_dotenv
 from discord import Intents, Client, Message, Reaction, User
 from controller import controller
@@ -6,6 +8,7 @@ from controller import controller
 
 load_dotenv()
 TOKEN: str = os.getenv("TOKEN")
+INVITE_URL = os.getenv("INVITE_URL")
 
 sessions = []
 
@@ -14,6 +17,17 @@ intents.members = True
 intents.reactions = True
 intents.message_content = True
 client: Client = Client(intents=intents)
+
+app = Flask(__name__)
+
+@app.route("/health", methods=["GET"])
+def health_check():
+    return jsonify({"status": "running"}), 200
+
+@app.route("/invite", methods=["GET"])
+def invite_bot():
+    invite_url = f"{INVITE_URL}"
+    return redirect(invite_url)
 
 
 @client.event
@@ -50,9 +64,9 @@ async def on_reaction_remove(reaction: Reaction, user: User):
                 session.remove_player(user)
 
 
-def main() -> None:
-    client.run(token=TOKEN)
-
+def run_discord_bot():
+    client.run(TOKEN)
 
 if __name__ == "__main__":
-    main()
+    threading.Thread(target=run_discord_bot, daemon=True).start()
+    app.run(host="0.0.0.0", port=5000, debug=False)

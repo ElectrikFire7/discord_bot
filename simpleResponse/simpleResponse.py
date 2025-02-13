@@ -16,4 +16,4 @@ async def simpleResponse(message: Message):
     elif content.startswith("hi") or content.endswith("hi") or content == "hi" or " hi " in content:
         await message.channel.send("FINALLY!! Someone is here")
         await message.channel.send("I was getting bored, and all I could do was")
-        await message.channel.send(file = File("media\milk_burst.gif"))
+        await message.channel.send(file = File("media/milk_burst.gif"))

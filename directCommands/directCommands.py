@@ -17,3 +17,20 @@ async def directCommand(message: Message, message_content: str):
         i = randint(0, 100)
         response = str(message.author.mention) + "\nYou are " + str(i) + "%" + " gay"
         await message.channel.send(response)
+
+    elif message_content == "help":
+        response = '''```
+Commands:
+
+hello         - bot responds with a hello
+hello there   - bot responds with general kenobi
+hi            - bot responds with a hi
+!new          - bot creates a new psych session
+!start        - bot starts the psych round
+!stop         - bot stops the psych session
+?how big      - ;) try it yourself
+?how gay      - ;) try it yourself
+?help         - bot responds with a list of commands
+```'''
+
+        await message.channel.send(response)
