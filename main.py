@@ -2,7 +2,7 @@ import os
 import threading, requests, time
 from flask import Flask, jsonify, redirect
 from dotenv import load_dotenv
-from discord import Intents, Client, Message, Reaction, User
+from discord import Intents, Client, Message, Reaction, User # type: ignore
 from controller import controller
 
 
