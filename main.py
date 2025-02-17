@@ -4,7 +4,17 @@ from flask import Flask, jsonify, redirect
 from dotenv import load_dotenv
 from discord import Intents, Client, Message, Reaction, User # type: ignore
 from controller import controller
+from transformers import AutoTokenizer, AutoModelForCausalLM
 
+
+def load_model():
+    global model, tokenizer
+    model_name = "./simpModel"  
+    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    model = AutoModelForCausalLM.from_pretrained(model_name)
+
+    if tokenizer.pad_token is None:
+        tokenizer.pad_token = tokenizer.eos_token
 
 load_dotenv()
 TOKEN: str = os.getenv("TOKEN")
@@ -40,7 +50,7 @@ async def on_message(message: Message) -> None:
     if message.author == client.user:
         return
 
-    await controller(message, sessions, client)
+    await controller(message, sessions, client, tokenizer, model)
 
 @client.event
 async def on_reaction_add(reaction: Reaction, user: User):
@@ -92,5 +102,6 @@ def keep_alive():
 
 if __name__ == "__main__":
     threading.Thread(target=run_flask, daemon=True).start()
-    threading.Thread(target=keep_alive, daemon=True).start()
+    #threading.Thread(target=keep_alive, daemon=True).start()
+    load_model()
     run_discord_bot()
