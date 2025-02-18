@@ -2,6 +2,7 @@ from discord import Message
 from directCommands.directCommands import directCommand
 from simpleResponse.simpleResponse import simpleResponse
 from psychCommands.psychCommands import psychCommand
+from pokerCommands.poker import pokerCommand
 
 async def controller (message: Message, sessions, client) -> None:
 
@@ -20,6 +21,10 @@ async def controller (message: Message, sessions, client) -> None:
     if user_message[0] == '!':
         user_message = user_message[1:]
         await psychCommand(message, user_message, sessions, client)
+
+    if user_message[0] == '#':
+        user_message = user_message[1:]
+        await pokerCommand(message, user_message, sessions, client)
 
     #if the message has no starting tag, it has a few fun responses
     #check simpleResponse folder
