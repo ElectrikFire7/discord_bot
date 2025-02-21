@@ -8,7 +8,8 @@ A simple Discord bot that responds to messages, handles reactions, and supports 
 ✅ Responds to user messages with predefined replies.  
 ✅ Supports **private and public messages**.  
 ✅ Adds **emoji reactions** to specific messages.  
-✅ Enables playing a lite version of Psych on the channel.
+✅ Enables playing a lite version of Psych on the channel.  
+✅ Enables playing a lite version of Poker on the channel.
 
 ---
 
@@ -78,6 +79,18 @@ python main.py
 | `!start` | Starts a new Round |
 | `!stop` | Stops existing session |
 | `!players` | Lists all existing players |
+
+## **📜 Bot Poker Commands**
+| Commands | Description |
+|---------|-------------|
+| `#new` | Starts a new poker game |
+| `#start` | Deals a new set of cards |
+| `#end` | Stops existing game |
+| `#bet <amount>` | To bet your amount |
+| `#fold` | Fold |
+| `#match` | Match the highest bet |
+| `#next` | Opens the next card on the table |
+| `#showdown` | Finishes the round and produces results |
 
 ---
 

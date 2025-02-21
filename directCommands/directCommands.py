@@ -79,6 +79,17 @@ hi            - bot responds with a hi
 ?how big      - ;) try it yourself
 ?how gay      - ;) try it yourself
 ?help         - bot responds with a list of commands
+
+## **📜 Bot Poker Commands**
+
+#new          - Starts a new poker game
+#start        - Deals a new set of cards
+#end          - Stops existing game
+#bet <amount> - To bet your amount
+#fold         - Fold
+#match        - Match the highest bet
+#next         - Opens the next card on the table
+#showdown     - Finishes the round and produces results
 ```'''
 
         await message.channel.send(response)
