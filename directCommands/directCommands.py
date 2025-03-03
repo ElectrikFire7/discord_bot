@@ -11,16 +11,33 @@ import requests
 async def directCommand(message: Message, message_content: str):
     
     message_content = message_content.lower()
+    user = None
+    if message.mentions:
+        user = message.mentions[0]
 
-    if message_content == "how big":
+    if message_content.startswith("how big"):
         i = randint(1, 10)
         response = "8" + "=" * i + "D"
+        if user:
+            response = str(user.mention)+ " your pp:" + "\n" + response
+        else:
+            response = str(message.author.mention) + " your pp:" + "\n" + response
+
+        if(i < 6):
+            response = response + " 🤏"
+        else:
+            response = response + " 😉"
+
         await message.channel.send(response)
 
 
-    elif message_content == "how gay":
+    elif message_content.startswith("how gay"):
         i = randint(0, 100)
-        response = str(message.author.mention) + "\nYou are " + str(i) + "%" + " gay"
+        response = "\nYou are " + str(i) + "%" + " gay"
+        if user:
+            response = str(user.mention) + response
+        else:
+            response = str(message.author.mention) + response
         await message.channel.send(response)
 
 
