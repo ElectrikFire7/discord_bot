@@ -56,7 +56,7 @@ async def psychCommand(message: Message, user_message: str, sessions, client) ->
                 def check(msg: Message):
                     return msg.author == player.user and isinstance(msg.channel, discord.DMChannel)
 
-                response = await client.wait_for("message", check=check, timeout=30)
+                response = await client.wait_for("message", check=check, timeout=60)
                 gameSession.responses[player] = response
             except asyncio.TimeoutError:
                 gameSession.responses[player] = "No response (timed out)"
