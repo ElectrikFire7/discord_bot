@@ -2,8 +2,10 @@ import os
 import threading, requests, time
 from flask import Flask, jsonify, redirect
 from dotenv import load_dotenv
+import discord
 from discord import Intents, Client, Message, Reaction, User # type: ignore
 from controller import controller
+import aiohttp
 
 
 load_dotenv()
@@ -11,6 +13,7 @@ TOKEN: str = os.getenv("TOKEN")
 INVITE_URL = os.getenv("INVITE_URL")
 
 sessions = []
+status = "running"
 
 intents: Intents = Intents.default()
 intents.members = True
@@ -22,7 +25,7 @@ app = Flask(__name__)
 
 @app.route("/health", methods=["GET"])
 def health_check():
-    return jsonify({"status": "running"}), 200
+    return jsonify({"status": f"{status}" }), 200
 
 @app.route("/invite", methods=["GET"])
 def invite_bot():
@@ -36,8 +39,41 @@ async def on_ready() -> None:
 
 
 @client.event
-async def on_message(message: Message) -> None:
+async def on_message(message: Message) -> None:    
+    
+    #checks rate limit after every message it sends
     if message.author == client.user:
+        url = "https://discord.com/api/v10/users/@me"
+        headers = {"Authorization": f"Bot {TOKEN}"}
+
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url, headers=headers) as response:
+
+                if(response.status != 200):
+                    print("Failed to get bot")
+                    print(f"Status Code: {type(response.status)}")
+                    return
+
+                limit = response.headers.get('X-RateLimit-Limit')
+                remaining = response.headers.get('X-RateLimit-Remaining')
+                reset_after = response.headers.get('X-RateLimit-Reset-After')
+                reset_time = response.headers.get('X-RateLimit-Reset')
+
+                if(int(remaining) <= 0):
+                    print(f"Total Requests Allowed: {limit}")
+                    print(f"Requests Remaining: {remaining}")
+                    print(f"Resets in: {reset_after} seconds")
+                    print(f"Resets at: {time.ctime(float(reset_time))}")
+                    status = "rate limited"
+                    return
+
+                elif(int(remaining) < 100):
+                    print("Rate limit safety reached")
+                    status = "rate limit safety reached"
+                    return
+                
+                else:
+                    status = "running"
         return
 
     await controller(message, sessions, client)
@@ -54,7 +90,6 @@ async def on_reaction_add(reaction: Reaction, user: User):
 
 @client.event
 async def on_reaction_remove(reaction: Reaction, user: User):
-    print(user)
     if user.bot:
         return
 
